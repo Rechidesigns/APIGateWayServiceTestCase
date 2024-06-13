@@ -2,6 +2,8 @@ const express = require('express')
 const router = express.Router()
 const axios = require('axios')
 const registry = require('./registry.json')
+const fs = require('fs')
+const { error } = require('console')
 
 
 router.all('/:apiName/:path', (req, res) => {
@@ -18,9 +20,20 @@ router.all('/:apiName/:path', (req, res) => {
     }else {
         
     res.send('API name doesnt exist')
-
     }
 })
 
+router.post('/register', (req, res) => {
+    const registerationInfo = req.body
+    registry.services[registerationInfo.apiName] = {...registerationInfo}
+
+    fs.writeFile("./routes/registry.json'", JSON.stringify(registry), (error) => {
+        if(error) {
+            res.send('could not register ' + registerationInfo.apiName + "'\n" + error)
+        }else {
+            res.send("successfully registered '" + registerationInfo.apiName + "'")
+        }
+    })
+})
 
 module.exports = router
