@@ -3,8 +3,11 @@ const app = express()
 const PORT = 3001
 
 app.use(express.json())
-app.get('/fakeapin', (req, resn) => {
+app.get('/fakeapi', (req, resn) => {
     resn.send('Hello from fake api')
+})
+app.get('/bogusapi', (req, res, next) => {
+    res.send('Bogus api says hello!')
 })
 
 app.listen(PORT, () => {
