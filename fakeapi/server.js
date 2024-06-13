@@ -6,7 +6,7 @@ app.use(express.json())
 app.get('/fakeapi', (req, resn) => {
     resn.send('Hello from fake api')
 })
-app.get('/bogusapi', (req, res, next) => {
+app.post('/bogusapi', (req, res, next) => {
     res.send('Bogus api says hello!')
 })
 
