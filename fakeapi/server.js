@@ -1,5 +1,7 @@
 const express = require('express')
 const app = express()
+const axios = require('axios')
+const HOST = "localhost"
 const PORT = 3001
 
 app.use(express.json())
@@ -11,5 +13,24 @@ app.post('/bogusapi', (req, res, next) => {
 })
 
 app.listen(PORT, () => {
-    console.log('Fake server started on port ' + PORT)
-})
+    axios({
+        method: "POST",
+        url: "http://localhost:3000/register",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        data: {
+          apiName: "registrytest",
+          protocol: "http",
+          host: HOST,
+          port: PORT,
+        },
+    }).then((response) => {
+
+        console.log(response.data);
+
+    });
+
+    console.log("Fake server started on port " + PORT);
+});
+
